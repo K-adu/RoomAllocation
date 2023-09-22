@@ -28,7 +28,9 @@ export class AuthService {
       const value = await this.otpService.verifyOTP(email, otp);
       console.log('Otp verificaion success', value);
 
-      // if the step succeeds then save the value to the database of the user
+      // yesma paila user cha ki nai check garne
+      // cha bhane sidhhai jwt pathaune with the user details
+      //chaina bhane tyo email lai db ma rakherah jwt pathaune
     } catch (e) {
       console.log('otp verification failed', e);
     }

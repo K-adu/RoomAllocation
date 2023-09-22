@@ -7,8 +7,9 @@ export class AuthController {
 
   @Post('/login')
   async generateOtpController(@Body() body: any) {
-    await this.authService.generateOtpAndSendService(body.email);
-    console.log('this is from the contriller', body.email);
+    try {
+      await this.authService.generateOtpAndSendService(body.email);
+    } catch (e) {}
   }
 
   @Post('/otp')
