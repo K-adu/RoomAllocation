@@ -1,18 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { OtpService } from './handlers/otp.service';
+import { MailerService } from './handlers/mailer.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private otpService: OtpService) {}
+  constructor(
+    private otpService: OtpService,
+    private mailerService: MailerService,
+  ) {}
 
   async generateOtpAndSendService(email) {
     //  otp generate garne
-    const otp = await this.otpService.generateOTP(email);
-    console.log(otp);
+    try {
+      const otp = await this.otpService.generateOTP(email);
+      const subject = 'EB App OTP verification';
+      const text = `Your OTP code is: ${otp}`;
+      // otp send garne tyo email ma
 
-    // otp send garne tyo email ma
-
-    //ani tespachi
+      //nodemailer use  garne
+      await this.mailerService.sendEmail(email, subject, text);
+    } catch (e) {
+      console.log('error from generation and sending', e);
+    }
   }
   async verifyOtpService(email, otp) {
     try {

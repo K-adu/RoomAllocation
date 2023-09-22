@@ -10,6 +10,7 @@ export class OtpService {
       secret,
       encoding: 'base32',
       digit: 5,
+      time: 120,
     });
     return otp;
   }
@@ -19,6 +20,7 @@ export class OtpService {
       secret,
       encoding: 'base32',
       token: otp,
+      time: 120,
     });
     return isValidOTP;
   }
