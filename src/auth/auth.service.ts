@@ -3,6 +3,7 @@ import { OtpService } from './handlers/otp.service';
 import { MailerService } from './handlers/mailer.service';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { GenerateJwtService } from './handlers/jwt.service';
 
 @Injectable()
 export class AuthService {
@@ -10,7 +11,7 @@ export class AuthService {
     private otpService: OtpService,
     private mailerService: MailerService,
     private userService: UserService,
-    private jwtService: JwtService,
+    private generateJwtService: GenerateJwtService,
   ) {}
 
   async generateOtpAndSendService(email) {
@@ -38,19 +39,13 @@ export class AuthService {
       const user = await this.userService.checkUserExistService(email);
       if (!user) {
         const data = {
-          email,
+          email: email,
         };
-
-        await this.userService.addUserToDbService(data);
+        const newUser = await this.userService.addUserToDbService(data);
+        return await this.generateJwtService.genetateJwt(newUser);
+      } else {
+        return await this.generateJwtService.genetateJwt(user);
       }
-      console.log('this is from the auth service', user);
-
-      const payload = {
-        id: user._id,
-        email: user.email,
-      };
-      const jwt = await this.jwtService.signAsync(payload);
-      console.log(jwt);
     } catch (e) {
       console.log('otp verification failed', e);
     }

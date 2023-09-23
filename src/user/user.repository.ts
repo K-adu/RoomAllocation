@@ -13,6 +13,7 @@ export class UserRepository {
     return await this.userModel.findOne({ email: email });
   }
   async addUserToDbRepository(data) {
+    console.log('this is printing form the repository', data);
     return await this.userModel.create(data);
   }
 }
