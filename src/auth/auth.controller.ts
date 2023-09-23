@@ -15,5 +15,7 @@ export class AuthController {
   @Post('/otp')
   async verifyOtpContoller(@Body() body: any) {
     await this.authService.verifyOtpService(body.email, body.otp);
+
+    //yesbata jwt return garcha
   }
 }

@@ -8,12 +8,12 @@ export class MailerService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    // Create a transporter for sending emails
+    // first ma transporter banaune
     this.transporter = nodemailer.createTransport({
-      service: 'Gmail', // Your email service provider (e.g., Gmail)
+      service: 'Gmail',
       auth: {
-        user: 'yanjish.hellscream@gmail.com', // Your email address
-        pass: 'beutpkcwmduznqmk', // Your email password or app-specific password
+        user: 'yanjish.hellscream@gmail.com',
+        pass: 'beutpkcwmduznqmk',
       },
     });
   }
