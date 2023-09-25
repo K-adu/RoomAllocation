@@ -4,12 +4,6 @@ import { BookingRepository } from './booking.repository';
 @Injectable()
 export class BookingService {
   constructor(private bookingRepository: BookingRepository) {}
-
-  /* create garda kheri kasari create garney
-        first ma ta tyo floor and tyo time ma typ date ma
-        booking available cha ki nei herne
-        ani if chaina bhane matra create garne natra say "already booked"
-  */
   async createBookingService(body, req) {
     const hostName = req.user.id;
     const data = {
@@ -24,5 +18,9 @@ export class BookingService {
     } else {
       return 'The room is taken for the given time slot';
     }
+  }
+
+  async getAllBookingService() {
+    return await this.bookingRepository.getAllBookingRepository();
   }
 }

@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateBookingDto } from './dto/createBooking.dto';
 import { AuthGuard } from 'src/shared/guard/auth.guard';
 import { BookingService } from './booking.service';
@@ -22,6 +29,17 @@ export class BookingController {
       console.log('this is error from the controlller', error);
     }
   }
+  //euta api to display all the bookings order by time
+  @UseGuards(AuthGuard)
+  @Get('/displayall')
+  async getAllBookingsController() {
+    return await this.bookingService.getAllBookingService();
+  }
 
+  // arko api to display all the bookings that i booked
+
+  //arko api to edit the bookings that i booked
+
+  //arko api to delete the bookings that i booked
   //show all the booked bookings
 }

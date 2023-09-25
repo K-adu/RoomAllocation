@@ -22,7 +22,7 @@ export class BookingRepository {
     const startDate = new Date(data.date);
     const endDate = new Date(data.date);
 
-    // Set the start and end times based on the provided startTime and endTime
+    //tyo given time lai split garne
     startDate.setHours(
       parseInt(data.startTime.split(':')[0], 10),
       parseInt(data.startTime.split(':')[1], 10),
@@ -32,7 +32,7 @@ export class BookingRepository {
       parseInt(data.endTime.split(':')[1], 10),
     );
 
-    // Query the database to check for existing bookings on the same floor and within the specified time range
+    // tyo hours floor and day ma booking cha ki nai check garne
     const existingBooking = await this.bookingModel.findOne({
       floor: data.floor,
       date: data.date,
@@ -59,11 +59,45 @@ export class BookingRepository {
     return true; // Room is vacant
   }
 
-  //euta api to display all the bookings order by type
+  async getAllBookingRepository() {
+    try {
+      const bookings = await this.bookingModel.aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'hostName',
+            foreignField: '_id',
+            as: 'host',
+          },
+        },
+        {
+          $unwind: '$host',
+        },
+        {
+          $project: {
+            _id: 1,
+            eventName: 1,
+            description: 1,
+            floor: 1,
+            startTime: 1,
+            endTime: 1,
+            date: 1,
+            guests: 1,
+            'host.email': 1,
+          },
+        },
+        {
+          $sort: {
+            date: 1, // Sort by date in ascending order
+            startTime: 1,
+          },
+        },
+      ]);
 
-  // arko api to display all the bookings that i booked
-
-  //arko api to edit the bookings that i booked
-
-  //arko api to delete the bookings that i booked
+      return bookings;
+    } catch (error) {
+      //databse query error
+      throw error;
+    }
+  }
 }
