@@ -2,7 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { OtpService } from './handlers/otp.service';
 import { MailerService } from './handlers/mailer.service';
 import { UserService } from 'src/user/user.service';
-import { JwtService } from '@nestjs/jwt';
 import { GenerateJwtService } from './handlers/jwt.service';
 
 @Injectable()
