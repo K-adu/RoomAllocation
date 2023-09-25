@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BookingSchema } from './schema/booking.schema';
 import { SharedModule } from 'src/shared/shared.module';
 import { BookingRepository } from './booking.repository';
+import { TimeService } from './handlers/time.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { BookingRepository } from './booking.repository';
     SharedModule,
   ],
   controllers: [BookingController],
-  providers: [BookingService, BookingRepository],
+  providers: [BookingService, BookingRepository, TimeService],
 })
 export class BookingModule {}

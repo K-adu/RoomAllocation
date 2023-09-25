@@ -31,12 +31,17 @@ export class BookingController {
   }
   //euta api to display all the bookings order by time
   @UseGuards(AuthGuard)
-  @Get('/displayall')
+  @Get('/display/all')
   async getAllBookingsController() {
     return await this.bookingService.getAllBookingService();
   }
 
   // arko api to display all the bookings that i booked
+  @UseGuards(AuthGuard)
+  @Get('/display/my')
+  async getMyBookingController(@Request() req) {
+    return await this.bookingService.getMyBookingService(req);
+  }
 
   //arko api to edit the bookings that i booked
 

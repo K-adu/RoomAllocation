@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Booking } from './schema/booking.schema';
 import mongoose from 'mongoose';
+import useId from '@mui/material/utils/useId';
 
 @Injectable()
 export class BookingRepository {
@@ -15,25 +16,7 @@ export class BookingRepository {
   }
 
   async checkVacantRoomRepository(data) {
-    if (data.startTime === data.endTime) {
-      return 'startTime cannot be equal to end time';
-    }
-
-    const startDate = new Date(data.date);
-    const endDate = new Date(data.date);
-
-    //tyo given time lai split garne
-    startDate.setHours(
-      parseInt(data.startTime.split(':')[0], 10),
-      parseInt(data.startTime.split(':')[1], 10),
-    );
-    endDate.setHours(
-      parseInt(data.endTime.split(':')[0], 10),
-      parseInt(data.endTime.split(':')[1], 10),
-    );
-
-    // tyo hours floor and day ma booking cha ki nai check garne
-    const existingBooking = await this.bookingModel.findOne({
+    const existingBookingAM = await this.bookingModel.findOne({
       floor: data.floor,
       date: data.date,
       $or: [
@@ -45,23 +28,24 @@ export class BookingRepository {
         },
         {
           $and: [
-            { startTime: { $lte: data.endTime } },
-            { endTime: { $gte: data.endTime } },
+            { startTime: { $lt: data.endTime } },
+            { endTime: { $gt: data.endTime } },
           ],
         },
       ],
     });
-
-    if (existingBooking) {
-      return false; // Room is not vacant
-    }
-
-    return true; // Room is vacant
+    return existingBookingAM;
   }
 
   async getAllBookingRepository() {
     try {
+      const currentDate = new Date();
       const bookings = await this.bookingModel.aggregate([
+        {
+          $match: {
+            date: { $gte: currentDate },
+          },
+        },
         {
           $lookup: {
             from: 'users',
@@ -88,7 +72,7 @@ export class BookingRepository {
         },
         {
           $sort: {
-            date: 1, // Sort by date in ascending order
+            date: 1,
             startTime: 1,
           },
         },
@@ -96,7 +80,18 @@ export class BookingRepository {
 
       return bookings;
     } catch (error) {
-      //databse query error
+      throw error;
+    }
+  }
+
+  async getMyBookingRepository(userId) {
+    try {
+      const currentDate = new Date();
+      return await this.bookingModel.find({
+        hostName: userId,
+        date: { $gte: currentDate },
+      });
+    } catch (error) {
       throw error;
     }
   }
