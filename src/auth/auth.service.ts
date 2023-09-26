@@ -1,6 +1,10 @@
 // auth.service.ts
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { OtpService } from './handlers/otp.service';
 import { MailerService } from './handlers/mailer.service';
 import { UserService } from '../user/user.service'; // Update the import path
@@ -24,7 +28,7 @@ export class AuthService {
       const mail = await this.mailerService.sendEmail(email, subject, text);
       return mail;
     } catch (e) {
-      console.log('error from generation and sending', e);
+      throw new NotAcceptableException('The provided email is not acceptable');
     }
   }
 

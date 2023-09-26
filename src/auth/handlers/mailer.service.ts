@@ -1,6 +1,6 @@
 // mailer.service.ts
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
@@ -26,6 +26,10 @@ export class MailerService {
       text,
     };
     console.log(mailOptions);
-    await this.transporter.sendMail(mailOptions);
+    try {
+      await this.transporter.sendMail(mailOptions);
+    } catch (e) {
+      throw new NotAcceptableException('Not acceptable');
+    }
   }
 }

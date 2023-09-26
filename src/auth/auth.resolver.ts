@@ -9,7 +9,7 @@ import { Token } from './dto/token.dto';
 @Resolver((of) => 'User')
 export class AuthResolver {
   constructor(private authService: AuthService) {}
-
+  // this is a dummyt query just cause to have mutation we should have one query
   @Query(() => User)
   async tryQuery() {
     return {
@@ -22,10 +22,13 @@ export class AuthResolver {
   @Mutation(() => OtpMail)
   async generateOtpResolver(@Args('generateOpt') data: LoginDto) {
     try {
-      await this.authService.generateOtpAndSendService(data.email);
-      return true;
+      const global = await this.authService.generateOtpAndSendService(
+        data.email,
+      );
+      console.log(global);
+      return { otpBool: true };
     } catch (e) {
-      throw new NotAcceptableException('not accaptable');
+      throw new NotAcceptableException('not acceptable');
     }
   }
 
