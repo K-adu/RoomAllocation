@@ -1,27 +1,29 @@
 import { IsString, IsDate, IsArray } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { Field, InputType } from '@nestjs/graphql';
+
+@InputType()
 export class CreateBookingDto {
-  @IsString()
+  @Field()
   eventName: string;
 
-  @IsString()
+  @Field()
   description: string;
 
-  @IsDate()
+  @Field()
   date: Date;
 
-  @IsString()
+  @Field()
   floor: string;
 
-  @IsString()
+  @Field()
   startTime: string;
 
-  @IsString()
+  @Field()
   endTime: string;
 
-  @IsDate()
+  @Field()
   notifyTime: Date;
 
-  @IsArray()
+  @Field(() => [String])
   guests: string[];
 }

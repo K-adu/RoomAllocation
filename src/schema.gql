@@ -18,6 +18,23 @@ type Token {
   token: String!
 }
 
+type Booking {
+  hostName: String!
+  eventName: String!
+  date: DateTime!
+  floor: String!
+  startTime: String!
+  endTime: String!
+  description: String!
+  notifyTime: DateTime!
+  guests: [String!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Host {
   _id: String!
   email: String!
@@ -36,11 +53,6 @@ type BookingResponse {
   host: Host!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Query {
   tryQuery: User!
   getAllBookingResolver: [BookingResponse!]!
@@ -49,6 +61,7 @@ type Query {
 type Mutation {
   generateOtpResolver(generateOpt: LoginDto!): OtpMail!
   verifyOtpResolver(generateOpt: OtpDto!): Token!
+  createBookingResolver(createBooking: CreateBookingDto!): Booking!
 }
 
 input LoginDto {
@@ -58,4 +71,15 @@ input LoginDto {
 input OtpDto {
   email: String!
   otp: String!
+}
+
+input CreateBookingDto {
+  eventName: String!
+  description: String!
+  date: DateTime!
+  floor: String!
+  startTime: String!
+  endTime: String!
+  notifyTime: DateTime!
+  guests: [String!]!
 }

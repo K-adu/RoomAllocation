@@ -1,7 +1,8 @@
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 @Schema()
+@ObjectType()
 export class Booking extends Document {
   @Field()
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
