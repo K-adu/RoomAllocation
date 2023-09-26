@@ -8,7 +8,7 @@ export class MailerService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    // first ma transporter banaune
+    // First, create a transporter
     this.transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
@@ -25,12 +25,7 @@ export class MailerService {
       subject,
       text,
     };
-
-    try {
-      console.log(mailOptions);
-      await this.transporter.sendMail(mailOptions);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(mailOptions);
+    await this.transporter.sendMail(mailOptions);
   }
 }

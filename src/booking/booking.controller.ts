@@ -9,42 +9,43 @@ import {
 import { CreateBookingDto } from './dto/createBooking.dto';
 import { AuthGuard } from 'src/shared/guard/auth.guard';
 import { BookingService } from './booking.service';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('Event Booking')
 @Controller('booking')
 export class BookingController {
-  //create a manual booking
   constructor(private bookingService: BookingService) {}
 
   @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Create a new booking' })
+  @ApiBody({ type: CreateBookingDto })
+  @ApiResponse({
+    status: 201,
+    description: 'object of the created booking',
+  })
   @Post('/create')
   async createBookingController(
     @Body() body: CreateBookingDto,
     @Request() req,
   ) {
-    // console.log(body);
-    // console.log(req.user);
     try {
       return await this.bookingService.createBookingService(body, req);
     } catch (error) {
-      console.log('this is error from the controlller', error);
+      return 'Error creating booking';
     }
   }
-  //euta api to display all the bookings order by time
+
+  @ApiOperation({ summary: 'Get all events (past and future)' })
   @UseGuards(AuthGuard)
   @Get('/display/all')
   async getAllBookingsController() {
     return await this.bookingService.getAllBookingService();
   }
 
-  // arko api to display all the bookings that i booked
+  @ApiOperation({ summary: 'Get events that I booked' })
   @UseGuards(AuthGuard)
   @Get('/display/my')
   async getMyBookingController(@Request() req) {
     return await this.bookingService.getMyBookingService(req);
   }
-
-  //arko api to edit the bookings that i booked
-
-  //arko api to delete the bookings that i booked
-  //show all the booked bookings
 }

@@ -1,4 +1,4 @@
-// auth.service.ts
+// jwt.service.ts
 
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -7,14 +7,13 @@ import { JwtService } from '@nestjs/jwt';
 export class GenerateJwtService {
   constructor(private jwtService: JwtService) {}
 
-  async genetateJwt(user) {
+  async generateJwt(user: any) {
+    // Assuming user is of type 'any'
     const payload = {
       id: user._id,
       email: user.email,
     };
-    console.log('this is from the auth service', user);
 
-    const jwt = await this.jwtService.signAsync(payload);
-    console.log(jwt);
+    return await this.jwtService.signAsync(payload);
   }
 }

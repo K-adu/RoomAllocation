@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  email: String!
+  fullName: String!
+  phoneNumber: Float!
+  designation: Float!
+  floor: String!
+}
+
+type OtpMail {
+  otpBool: Boolean!
+}
+
+type Token {
+  token: String!
+}
+
+type Query {
+  tryQuery: User!
+}
+
+type Mutation {
+  generateOtpResolver(generateOpt: LoginDto!): OtpMail!
+  verifyOtpResolver(generateOpt: OtpDto!): Token!
+}
+
+input LoginDto {
+  email: String!
+}
+
+input OtpDto {
+  email: String!
+  otp: String!
+}
