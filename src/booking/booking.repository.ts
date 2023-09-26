@@ -67,7 +67,9 @@ export class BookingRepository {
             endTime: 1,
             date: 1,
             guests: 1,
+            'host._id': 1,
             'host.email': 1,
+            'host.fullName': 1,
           },
         },
         {
