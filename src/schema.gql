@@ -53,15 +53,27 @@ type BookingResponse {
   host: Host!
 }
 
+type MyBookingsResponse {
+  _id: String!
+  eventName: String!
+  description: String!
+  date: DateTime!
+  floor: String!
+  startTime: String!
+  endTime: String!
+  guests: [String!]!
+}
+
 type Query {
   tryQuery: User!
-  getAllBookingResolver: [BookingResponse!]!
+  getAllBooking: [BookingResponse!]!
+  getMyBooking: [MyBookingsResponse!]!
 }
 
 type Mutation {
   generateOtpResolver(generateOpt: LoginDto!): OtpMail!
   verifyOtpResolver(generateOpt: OtpDto!): Token!
-  createBookingResolver(createBooking: CreateBookingDto!): Booking!
+  createBooking(createBooking: CreateBookingDto!): Booking!
 }
 
 input LoginDto {

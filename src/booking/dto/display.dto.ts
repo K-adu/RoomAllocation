@@ -42,3 +42,30 @@ export class BookingResponse {
   @Field()
   host: Host;
 }
+
+@ObjectType()
+export class MyBookingsResponse {
+  @Field()
+  _id: string;
+
+  @Field()
+  eventName: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  date: Date;
+
+  @Field()
+  floor: string;
+
+  @Field()
+  startTime: string;
+
+  @Field()
+  endTime: string;
+
+  @Field(() => [String])
+  guests: string[];
+}

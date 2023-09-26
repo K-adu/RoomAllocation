@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { BookingRepository } from './booking.repository';
 import * as moment from 'moment';
 import { TimeService } from './handlers/time.service';
@@ -24,7 +24,7 @@ export class BookingService {
     if (vacantRoom) {
       return await this.bookingRepository.createBookingRepository(data);
     } else {
-      return 'The room is taken for the given time slot';
+      throw new NotAcceptableException('Cannot Create For the Given Time Slot');
     }
   }
 
