@@ -1,4 +1,4 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { User } from 'src/user/schema/user.schema';
 
 @ObjectType()
@@ -68,4 +68,13 @@ export class MyBookingsResponse {
 
   @Field(() => [String])
   guests: string[];
+}
+
+@InputType()
+export class BookingFilters {
+  @Field({ nullable: true })
+  floor?: string;
+
+  @Field(() => Date, { defaultValue: new Date(), nullable: true })
+  date: Date;
 }

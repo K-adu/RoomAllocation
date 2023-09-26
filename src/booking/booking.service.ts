@@ -28,8 +28,8 @@ export class BookingService {
     }
   }
 
-  async getAllBookingService() {
-    return await this.bookingRepository.getAllBookingRepository();
+  async getAllBookingService(filter) {
+    return await this.bookingRepository.getAllBookingRepository(filter);
   }
 
   async getMyBookingService(req) {

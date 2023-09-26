@@ -37,15 +37,29 @@ export class BookingRepository {
     return existingBookingAM;
   }
 
-  async getAllBookingRepository() {
+  async getAllBookingRepository(filter) {
     try {
+      const filterDate = filter.date;
+      const filterFloor = filter.floor;
       const currentDate = new Date();
-      const bookings = await this.bookingModel.aggregate([
-        {
-          $match: {
-            date: { $gte: currentDate },
-          },
+
+      const pipeline = [];
+
+      pipeline.push({
+        $match: {
+          date: { $gte: filterDate },
         },
+      });
+
+      if (filterFloor) {
+        pipeline.push({
+          $match: {
+            floor: filterFloor,
+          },
+        });
+      }
+
+      pipeline.push(
         {
           $lookup: {
             from: 'users',
@@ -78,7 +92,9 @@ export class BookingRepository {
             startTime: 1,
           },
         },
-      ]);
+      );
+
+      const bookings = await this.bookingModel.aggregate(pipeline);
 
       return bookings;
     } catch (error) {
