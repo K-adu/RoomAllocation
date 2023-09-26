@@ -43,4 +43,8 @@ export class BookingService {
     }
     return await this.timeService.timeHandlerAMPM(data);
   }
+
+  async getAllOngoingMeetings() {
+    return await this.bookingRepository.getAllOngoingMeetings();
+  }
 }

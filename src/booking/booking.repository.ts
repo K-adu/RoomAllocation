@@ -113,4 +113,64 @@ export class BookingRepository {
       throw error;
     }
   }
+
+  //on going meeting euta ta huncha each floor ma lol birserah
+  // tesko lagi just which one has start time less than current time
+  // and end date greater than current time
+  async getAllOngoingMeetings() {
+    try {
+      const filterDate = new Date();
+      console.log('this is printing from the repo', filterDate);
+      const pipeline = [];
+
+      const ongoingMeetingsByFloor = await this.bookingModel.aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'hostName',
+            foreignField: '_id',
+            as: 'host',
+          },
+        },
+        {
+          $unwind: '$host',
+        },
+        {
+          $match: {
+            $expr: {
+              $and: [
+                { $lte: [{ $toDate: '$startTime' }, filterDate] },
+                { $gt: [{ $toDate: '$endTime' }, filterDate] },
+              ],
+            },
+          },
+        },
+        {
+          $group: {
+            _id: '$floor',
+            meetings: { $push: '$$ROOT' },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            eventName: 1,
+            description: 1,
+            floor: 1,
+            startTime: 1,
+            endTime: 1,
+            date: 1,
+            guests: 1,
+            'host._id': 1,
+            'host.email': 1,
+            'host.fullName': 1,
+          },
+        },
+      ]);
+      console.log(ongoingMeetingsByFloor);
+      return ongoingMeetingsByFloor;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

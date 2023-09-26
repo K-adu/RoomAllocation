@@ -20,20 +20,18 @@ export class AuthResolver {
   }
 
   @Mutation(() => OtpMail)
-  async generateOtpResolver(@Args('generateOpt') data: LoginDto) {
+  async sendEmail(@Args('generateOtp') data: LoginDto) {
     try {
-      const global = await this.authService.generateOtpAndSendService(
-        data.email,
-      );
+      const global = await this.authService.generateOtpService(data.email);
       console.log(global);
       return { otpBool: true };
     } catch (e) {
-      throw new NotAcceptableException('not acceptable');
+      throw new NotAcceptableException('Not acceptable');
     }
   }
 
   @Mutation(() => Token)
-  async verifyOtpResolver(@Args('generateOpt') data: OtpDto) {
+  async sendOtp(@Args('generateOpt') data: OtpDto) {
     try {
       const token = await this.authService.verifyOtpService(
         data.email,

@@ -1,5 +1,3 @@
-// mailer.service.ts
-
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
@@ -8,7 +6,6 @@ export class MailerService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    // First, create a transporter
     this.transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {

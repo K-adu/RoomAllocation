@@ -17,7 +17,7 @@ export class BookingResolver {
   // getting all the bookings of all the users
   // @UseGuards(AuthGuard)
   @Query(() => [BookingResponse])
-  async getAllBooking(@Args('filters') filter: BookingFilters) {
+  async allBookings(@Args('filters') filter: BookingFilters) {
     console.log(filter);
     const bookings = await this.bookingService.getAllBookingService(filter);
     console.log(bookings);
@@ -26,19 +26,25 @@ export class BookingResolver {
   // getting the bookings that i posted
   @UseGuards(AuthGuard)
   @Query(() => [MyBookingsResponse])
-  async getMyBooking(@Context() context: { req: Request }) {
+  async myBookings(@Context() context: { req: Request }) {
     const { req } = context;
     const bookings = await this.bookingService.getMyBookingService(req);
     return bookings;
   }
 
-  //getting
+  //API that return meeting that is ongoing now
+  @UseGuards(AuthGuard)
+  @Query(() => [BookingResponse])
+  async onGoingMeetings() {
+    const bookings = await this.bookingService.getAllOngoingMeetings();
+    return bookings;
+  }
 
   //creating new bookings
   @UseGuards(AuthGuard)
   @Mutation(() => Booking)
-  async createBooking(
-    @Args('createBooking') body: CreateBookingDto,
+  async createManualBooking(
+    @Args('create') body: CreateBookingDto,
     @Context() context: { req: Request },
   ) {
     const { req } = context;

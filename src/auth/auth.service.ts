@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import {
   Injectable,
   NotAcceptableException,
@@ -7,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { OtpService } from './handlers/otp.service';
 import { MailerService } from './handlers/mailer.service';
-import { UserService } from '../user/user.service'; // Update the import path
+import { UserService } from '../user/user.service';
 import { GenerateJwtService } from './handlers/jwt.service';
 
 @Injectable()
@@ -19,7 +17,7 @@ export class AuthService {
     private generateJwtService: GenerateJwtService,
   ) {}
 
-  async generateOtpAndSendService(email: string) {
+  async generateOtpService(email: string) {
     try {
       const otp = this.otpService.generateOTP(email);
       const subject = 'EB App OTP verification';

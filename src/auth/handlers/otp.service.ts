@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import { Injectable } from '@nestjs/common';
 import * as speakeasy from 'speakeasy';
 
@@ -9,7 +7,7 @@ export class OtpService {
     const otp = speakeasy.totp({
       secret,
       encoding: 'base32',
-      digit: 5,
+      digits: 5,
       time: 120,
     });
     return otp;
@@ -20,6 +18,7 @@ export class OtpService {
       secret,
       encoding: 'base32',
       token: otp,
+      digits: 5,
       time: 120,
     });
     return isValidOTP;
