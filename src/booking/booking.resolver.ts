@@ -4,6 +4,7 @@ import {
   BookingFilters,
   BookingResponse,
   MyBookingsResponse,
+  OngoingMeetings,
 } from './dto/display.dto';
 import { Booking } from './schema/booking.schema';
 import { CreateBookingDto } from './dto/createBooking.dto';
@@ -34,7 +35,7 @@ export class BookingResolver {
 
   //API that return meeting that is ongoing now
   @UseGuards(AuthGuard)
-  @Query(() => [BookingResponse])
+  @Query(() => [OngoingMeetings])
   async onGoingMeetings() {
     const bookings = await this.bookingService.getAllOngoingMeetings();
     return bookings;
@@ -57,4 +58,10 @@ export class BookingResolver {
       );
     }
   }
+
+  //upcoming events
+
+  //edit event
+
+  //delete event
 }

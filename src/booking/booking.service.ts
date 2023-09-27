@@ -45,6 +45,6 @@ export class BookingService {
   }
 
   async getAllOngoingMeetings() {
-    return await this.bookingRepository.getAllOngoingMeetings();
+    return await this.bookingRepository.getAllOngoingMeetingsRepository();
   }
 }

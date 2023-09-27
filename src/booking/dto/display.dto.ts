@@ -14,6 +14,33 @@ class Host {
 }
 
 @ObjectType()
+class Meeting {
+  @Field()
+  eventName: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  date: Date;
+
+  @Field()
+  floor: string;
+
+  @Field()
+  startTime: string;
+
+  @Field()
+  endTime: string;
+
+  @Field(() => [String])
+  guests: string[];
+
+  @Field()
+  host: Host;
+}
+
+@ObjectType()
 export class BookingResponse {
   @Field()
   _id: string;
@@ -77,4 +104,13 @@ export class BookingFilters {
 
   @Field(() => Date, { defaultValue: new Date(), nullable: true })
   date: Date;
+}
+
+@ObjectType()
+export class OngoingMeetings {
+  @Field()
+  _id: string;
+
+  @Field(() => [Meeting])
+  meetings: [Meeting];
 }

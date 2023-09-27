@@ -41,6 +41,17 @@ type Host {
   fullName: String
 }
 
+type Meeting {
+  eventName: String!
+  description: String!
+  date: DateTime!
+  floor: String!
+  startTime: String!
+  endTime: String!
+  guests: [String!]!
+  host: Host!
+}
+
 type BookingResponse {
   _id: String!
   eventName: String!
@@ -64,16 +75,21 @@ type MyBookingsResponse {
   guests: [String!]!
 }
 
+type OngoingMeetings {
+  _id: String!
+  meetings: [Meeting!]!
+}
+
 type Query {
   tryQuery: User!
   allBookings(filters: BookingFilters!): [BookingResponse!]!
   myBookings: [MyBookingsResponse!]!
-  onGoingMeetings: [BookingResponse!]!
+  onGoingMeetings: [OngoingMeetings!]!
 }
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-26T12:15:05.736Z"
+  date: DateTime = "2023-09-27T03:23:12.007Z"
 }
 
 type Mutation {
