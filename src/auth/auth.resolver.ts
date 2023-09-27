@@ -5,7 +5,7 @@ import { User } from 'src/user/schema/user.schema';
 import { OtpDto, OtpMail } from './dto/otp.dto';
 import { NotAcceptableException } from '@nestjs/common';
 import { Token } from './dto/token.dto';
-
+import Messages from '../common/language/responseMessage';
 @Resolver((of) => 'User')
 export class AuthResolver {
   constructor(private authService: AuthService) {}
@@ -20,18 +20,18 @@ export class AuthResolver {
   }
 
   @Mutation(() => OtpMail)
-  async sendEmail(@Args('generateOtp') data: LoginDto) {
+  async sendEmail(@Args('sendEmail') data: LoginDto) {
     try {
       const global = await this.authService.generateOtpService(data.email);
-      console.log(global);
+      console.log(Messages.SENDING_OTP_EMAIL_TEXT);
       return { otpBool: true };
     } catch (e) {
-      throw new NotAcceptableException('Not acceptable');
+      throw new NotAcceptableException(Messages.OTP_VERIFICATION_FAILED);
     }
   }
 
   @Mutation(() => Token)
-  async sendOtp(@Args('generateOpt') data: OtpDto) {
+  async sendOtp(@Args('sendOtp') data: OtpDto) {
     try {
       const token = await this.authService.verifyOtpService(
         data.email,

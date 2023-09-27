@@ -1,4 +1,5 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { MeetingDto } from 'src/common/dto/meeting.dto';
 import { User } from 'src/user/schema/user.schema';
 
 @ObjectType()
@@ -14,87 +15,24 @@ class Host {
 }
 
 @ObjectType()
-class Meeting {
+class Meeting extends MeetingDto {
   @Field()
-  eventName: string;
+  host: Host;
+}
 
+@ObjectType()
+export class BookingResponse extends MeetingDto {
   @Field()
-  description: string;
-
-  @Field()
-  date: Date;
-
-  @Field()
-  floor: string;
-
-  @Field()
-  startTime: string;
-
-  @Field()
-  endTime: string;
-
-  @Field(() => [String])
-  guests: string[];
+  _id: string;
 
   @Field()
   host: Host;
 }
 
 @ObjectType()
-export class BookingResponse {
+export class MyBookingsResponse extends MeetingDto {
   @Field()
   _id: string;
-
-  @Field()
-  eventName: string;
-
-  @Field()
-  description: string;
-
-  @Field()
-  date: Date;
-
-  @Field()
-  floor: string;
-
-  @Field()
-  startTime: string;
-
-  @Field()
-  endTime: string;
-
-  @Field(() => [String])
-  guests: string[];
-
-  @Field()
-  host: Host;
-}
-
-@ObjectType()
-export class MyBookingsResponse {
-  @Field()
-  _id: string;
-
-  @Field()
-  eventName: string;
-
-  @Field()
-  description: string;
-
-  @Field()
-  date: Date;
-
-  @Field()
-  floor: string;
-
-  @Field()
-  startTime: string;
-
-  @Field()
-  endTime: string;
-
-  @Field(() => [String])
-  guests: string[];
 }
 
 @InputType()

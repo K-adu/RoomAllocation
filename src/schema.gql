@@ -53,7 +53,6 @@ type Meeting {
 }
 
 type BookingResponse {
-  _id: String!
   eventName: String!
   description: String!
   date: DateTime!
@@ -61,11 +60,11 @@ type BookingResponse {
   startTime: String!
   endTime: String!
   guests: [String!]!
+  _id: String!
   host: Host!
 }
 
 type MyBookingsResponse {
-  _id: String!
   eventName: String!
   description: String!
   date: DateTime!
@@ -73,6 +72,7 @@ type MyBookingsResponse {
   startTime: String!
   endTime: String!
   guests: [String!]!
+  _id: String!
 }
 
 type OngoingMeetings {
@@ -89,12 +89,12 @@ type Query {
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-27T03:23:12.007Z"
+  date: DateTime = "2023-09-27T04:41:11.270Z"
 }
 
 type Mutation {
-  sendEmail(generateOtp: LoginDto!): OtpMail!
-  sendOtp(generateOpt: OtpDto!): Token!
+  sendEmail(sendEmail: LoginDto!): OtpMail!
+  sendOtp(sendOtp: OtpDto!): Token!
   createManualBooking(create: CreateBookingDto!): Booking!
 }
 
