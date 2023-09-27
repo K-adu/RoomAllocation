@@ -10,6 +10,7 @@ import { Booking } from './schema/booking.schema';
 import { CreateBookingDto } from './dto/createBooking.dto';
 import { NotAcceptableException, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/shared/guard/auth.guard';
+import { EditBookingDto, EditBookingResponse } from './dto/editBooking.dto';
 
 @Resolver((of) => Booking)
 export class BookingResolver {
@@ -59,9 +60,17 @@ export class BookingResolver {
     }
   }
 
-  //upcoming events
-
   //edit event
+  @UseGuards(AuthGuard)
+  @Mutation(() => EditBookingResponse)
+  async editBooking(
+    @Args('editBooking') data: EditBookingDto,
+    @Context() context: { req: Request },
+  ) {
+    const { req } = context;
+    const bookingId = data._id;
+    return await this.bookingService.editBookingService(req, bookingId, data);
+  }
 
   //delete event
 }

@@ -37,28 +37,28 @@ export class UserResolver {
     return true;
   }
 
-  @Mutation(() => Boolean)
-  async uploadProfilePic(
-    @Args('input', { type: () => GraphQLUpload }) file: FileUpload,
-    @Context() context: { req: Request },
-  ): Promise<boolean> {
-    const { req } = context;
+  // @Mutation(() => Boolean)
+  // async uploadProfilePic(
+  //   @Args('input', { type: () => GraphQLUpload }) file: FileUpload,
+  //   @Context() context: { req: Request },
+  // ): Promise<boolean> {
+  //   const { req } = context;
 
-    // Handle the uploaded image here
-    const { createReadStream, filename } = await file;
-    const stream = createReadStream();
-    // Example: Save the uploaded image to a specific directory
-    //send the data to service and upload it to s3 bucket
-    //return the string of the image and save it to the database
-    const path = `./uploads/${filename}`;
-    const writeStream = fs.createWriteStream(path);
+  //   // Handle the uploaded image here
+  //   const { createReadStream, filename } = await file;
+  //   const stream = createReadStream();
+  //   // Example: Save the uploaded image to a specific directory
+  //   //send the data to service and upload it to s3 bucket
+  //   //return the string of the image and save it to the database
+  //   const path = `./uploads/${filename}`;
+  //   const writeStream = fs.createWriteStream(path);
 
-    await new Promise((resolve, reject) => {
-      stream.pipe(writeStream);
-      writeStream.on('finish', resolve);
-      writeStream.on('error', reject);
-    });
+  //   await new Promise((resolve, reject) => {
+  //     stream.pipe(writeStream);
+  //     writeStream.on('finish', resolve);
+  //     writeStream.on('error', reject);
+  //   });
 
-    return true;
-  }
+  //   return true;
+  // }
 }

@@ -80,6 +80,16 @@ type OngoingMeetings {
   meetings: [Meeting!]!
 }
 
+type EditBookingResponse {
+  eventName: String
+  description: String
+  date: DateTime
+  floor: String
+  startTime: String
+  endTime: String
+  guests: [String!]
+}
+
 type Query {
   dummmy: User!
   tryQuery: User!
@@ -90,15 +100,15 @@ type Query {
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-27T09:59:18.854Z"
+  date: DateTime = "2023-09-27T12:20:12.684Z"
 }
 
 type Mutation {
   editUser(edit: EditUserDto!): Boolean!
-  uploadProfilePic(input: Upload!): Boolean!
   sendEmail(sendEmail: LoginDto!): OtpMail!
   sendOtp(sendOtp: OtpDto!): Token!
   createManualBooking(create: CreateBookingDto!): Booking!
+  editBooking(editBooking: EditBookingDto!): EditBookingResponse!
 }
 
 input EditUserDto {
@@ -109,9 +119,6 @@ input EditUserDto {
   floor: String
   profilePic: String
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input LoginDto {
   email: String!
@@ -131,4 +138,15 @@ input CreateBookingDto {
   endTime: String!
   notifyTime: DateTime!
   guests: [String!]!
+}
+
+input EditBookingDto {
+  _id: String!
+  eventName: String
+  description: String
+  date: DateTime
+  floor: String
+  startTime: String
+  endTime: String
+  guests: [String!]
 }

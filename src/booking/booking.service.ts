@@ -2,6 +2,8 @@ import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { BookingRepository } from './booking.repository';
 import * as moment from 'moment';
 import { TimeService } from './handlers/time.service';
+import { ThreeSixty } from '@mui/icons-material';
+import { identity } from 'rxjs';
 @Injectable()
 export class BookingService {
   constructor(
@@ -46,5 +48,47 @@ export class BookingService {
 
   async getAllOngoingMeetings() {
     return await this.bookingRepository.getAllOngoingMeetingsRepository();
+  }
+
+  async editBookingService(req, data, bookingId) {
+    const userId = req.user.id;
+    let isPost = await this.bookingRepository.checkLoggedInUserBooking(
+      bookingId,
+      userId,
+    );
+    if (!isPost) {
+      throw new NotAcceptableException('You cannot edit the post');
+    }
+    const update: any = {};
+    const fieldsToCheck = [
+      'eventName',
+      'description',
+      'date',
+      'floor',
+      'startTime',
+      'endTime',
+      'guests',
+    ];
+
+    // Iterate through the fields and update if not null
+    for (const field of fieldsToCheck) {
+      if (data[field] !== null && data[field] !== undefined) {
+        update[field] = data[field];
+      }
+    }
+    console.log('this is from the service checking null', update);
+    const editedPost = {
+      ...isPost,
+      ...update,
+    };
+    const isVacantSlot = this.checkVacantRoomService(editedPost);
+
+    if (!isVacantSlot) {
+      throw new NotAcceptableException(
+        'The following slot of the booking is taken',
+      );
+    }
+
+    return await this.bookingRepository.editBookingRepository(bookingId, data);
   }
 }

@@ -114,6 +114,15 @@ export class BookingRepository {
     }
   }
 
+  async checkLoggedInUserBooking(bookingId, userId) {
+    const data = await this.bookingModel.findOne({
+      hostName: userId,
+      _id: bookingId,
+    });
+
+    return data;
+  }
+
   //on going meeting euta ta huncha each floor ma lol birserah
   // tesko lagi just which one has start time less than current time
   // and end date greater than current time
@@ -174,5 +183,10 @@ export class BookingRepository {
     } catch (error) {
       throw error;
     }
+  }
+
+  async editBookingRepository(bookingId, data) {
+    const world = await this.bookingModel.findByIdAndUpdate(bookingId, data);
+    return world;
   }
 }
