@@ -81,6 +81,7 @@ type OngoingMeetings {
 }
 
 type Query {
+  dummmy: User!
   tryQuery: User!
   allBookings(filters: BookingFilters!): [BookingResponse!]!
   myBookings: [MyBookingsResponse!]!
@@ -89,14 +90,28 @@ type Query {
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-27T04:41:11.270Z"
+  date: DateTime = "2023-09-27T09:59:18.854Z"
 }
 
 type Mutation {
+  editUser(edit: EditUserDto!): Boolean!
+  uploadProfilePic(input: Upload!): Boolean!
   sendEmail(sendEmail: LoginDto!): OtpMail!
   sendOtp(sendOtp: OtpDto!): Token!
   createManualBooking(create: CreateBookingDto!): Booking!
 }
+
+input EditUserDto {
+  email: String
+  fullName: String
+  phoneNumber: String
+  designation: String
+  floor: String
+  profilePic: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input LoginDto {
   email: String!

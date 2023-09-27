@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 @ObjectType()
-export class User extends Document {
+export class User {
   @Prop({ required: true, unique: true })
   @Field() // Use appropriate GraphQL types based on your data
   email: string;
@@ -25,6 +25,9 @@ export class User extends Document {
   @Prop({ required: false, default: null })
   @Field({ nullable: true })
   floor: string | null;
+
+  @Prop({ required: false, default: null })
+  profilePic: string | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -6,7 +6,7 @@ import { OtpDto, OtpMail } from './dto/otp.dto';
 import { NotAcceptableException } from '@nestjs/common';
 import { Token } from './dto/token.dto';
 import Messages from '../common/language/responseMessage';
-@Resolver((of) => 'User')
+@Resolver((of) => 'Auth')
 export class AuthResolver {
   constructor(private authService: AuthService) {}
   // this is a dummyt query just cause to have mutation we should have one query

@@ -13,4 +13,9 @@ export class UserService {
   async addUserToDbService(data) {
     return await this.userRepository.addUserToDbRepository(data);
   }
+
+  async editUserService(req, data) {
+    const userId = req.user.id;
+    return await this.userRepository.editUserRepository(userId, data);
+  }
 }

@@ -16,4 +16,9 @@ export class UserRepository {
     console.log('this is printing form the repository', data);
     return await this.userModel.create(data);
   }
+
+  async editUserRepository(id, data) {
+    const edited = await this.userModel.findByIdAndUpdate(id, data);
+    console.log(edited);
+  }
 }

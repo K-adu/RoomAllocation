@@ -12,11 +12,11 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { MulterModule } from '@nestjs/platform-express/multer';
 @Module({
   imports: [
     UserModule,
     AuthModule,
-
     MongooseModule.forRoot('mongodb://localhost:27017/roomallocation'),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
