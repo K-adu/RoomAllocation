@@ -51,7 +51,7 @@ export class BookingService {
   }
 
   async editBookingService(req, data, bookingId) {
-    //afno bahek aru ko check hanne ki slot khali cha ki nai bhanerah
+    // Check if the user is allowed to edit this booking
     const userId = req.user.id;
     let isPost = await this.bookingRepository.checkLoggedInUserBooking(
       bookingId,
@@ -60,41 +60,20 @@ export class BookingService {
     if (!isPost) {
       throw new NotAcceptableException('You cannot edit the post');
     }
-    const update: any = {};
-    const fieldsToCheck = [
-      'eventName',
-      'description',
-      'date',
-      'floor',
-      'startTime',
-      'endTime',
-      'guests',
-    ];
 
-    // Iterate through the fields and update if not null
-    for (const field of fieldsToCheck) {
-      if (data[field] !== null && data[field] !== undefined) {
-        update[field] = data[field];
-      }
-    }
-    console.log('this is from the service checking null', update);
-    // const editedPost = {
-    //   ...isPost,
-    //   ...update,
-    // };
-    // console.log(isPost)
-    // console.log('this is from he edited post service', editedPost);
-    const isVacantSlot = this.bookingRepository.checkVacantRoomRepository(
-      update,
-      bookingId,
-    );
+    // Extract the start and end times from the request data
+    const startTime = moment(data.startTime, 'h:mm A').toISOString();
+    const endTime = moment(data.endTime, 'h:mm A').toISOString();
 
-    if (!isVacantSlot) {
-      throw new NotAcceptableException(
-        'The following slot of the booking is taken',
+    // Check if the edited slot overlaps with other meetings
+    const vacantRoom = await this.checkVacantRoomService(data);
+    if (vacantRoom) {
+      return await this.bookingRepository.editBookingRepository(
+        bookingId,
+        data,
       );
+    } else {
+      throw new NotAcceptableException('Cannot Create For the Given Time Slot');
     }
-
-    return await this.bookingRepository.editBookingRepository(bookingId, data);
   }
 }

@@ -34,7 +34,7 @@ export class Booking extends Document {
 
   @Field()
   @Prop({ required: true })
-  notifyTime: Date;
+  notifyTime: string;
 
   @Field(() => [String])
   @Prop({ type: [String], required: true }) // Array of emails

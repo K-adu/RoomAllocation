@@ -20,9 +20,7 @@ export class BookingResolver {
   // @UseGuards(AuthGuard)
   @Query(() => [BookingResponse])
   async allBookings(@Args('filters') filter: BookingFilters) {
-    console.log(filter);
     const bookings = await this.bookingService.getAllBookingService(filter);
-    console.log(bookings);
     return bookings;
   }
   // getting the bookings that i posted
@@ -69,7 +67,7 @@ export class BookingResolver {
   ) {
     const { req } = context;
     const bookingId = data._id;
-    return await this.bookingService.editBookingService(req, bookingId, data);
+    return await this.bookingService.editBookingService(req, data, bookingId);
   }
 
   //delete event

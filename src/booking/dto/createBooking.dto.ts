@@ -1,5 +1,6 @@
 import { IsString, IsDate, IsArray } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
+import { MeetingDto } from 'src/common/dto/meeting.dto';
 
 @InputType()
 export class CreateBookingDto {
@@ -22,7 +23,7 @@ export class CreateBookingDto {
   endTime: string;
 
   @Field()
-  notifyTime: Date;
+  notifyTime: string;
 
   @Field(() => [String])
   guests: string[];

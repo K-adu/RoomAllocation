@@ -11,12 +11,11 @@ export class BookingRepository {
   ) {}
 
   async createBookingRepository(data) {
-    console.log(data);
     return await this.bookingModel.create(data);
   }
 
   async checkVacantRoomRepository(data, bookingId = null) {
-    const existingBookingAM = await this.bookingModel.findOne({
+    const existingBooking = await this.bookingModel.findOne({
       floor: data.floor,
       date: data.date,
       $or: [
@@ -35,7 +34,7 @@ export class BookingRepository {
       ],
       _id: { $ne: data.bookingId },
     });
-    return existingBookingAM;
+    return existingBooking;
   }
 
   async getAllBookingRepository(filter) {
@@ -127,7 +126,6 @@ export class BookingRepository {
   async getAllOngoingMeetingsRepository() {
     try {
       const filterDate = new Date();
-      console.log('this is printing from the repo', filterDate);
       const pipeline = [];
 
       const ongoingMeetingsByFloor = await this.bookingModel.aggregate([
@@ -176,7 +174,6 @@ export class BookingRepository {
           },
         },
       ]);
-      console.log('this is prinitng from repo', ongoingMeetingsByFloor);
       return ongoingMeetingsByFloor;
     } catch (error) {
       throw error;
