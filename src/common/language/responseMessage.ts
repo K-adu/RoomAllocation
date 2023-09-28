@@ -1,5 +1,6 @@
 const responseMessages = {
   EN: {
+      EMAIL_SENDING_FAILED: 'Email Verification Failed. Try again later',
     UNAUTHORIZED_USER: 'Unauthorized.',
     EMAIL_DOES_NOT_EXIST: 'Email does not exists.',
     VERIFICATION_CODE_SENT_TO_EMAIL:
@@ -10,6 +11,7 @@ const responseMessages = {
     PASSWORD_RESET_CODE_SENT: 'Password reset code sent.',
     PROFILE_UPDATED_SUCCESSFULLY: 'Profile updated successfully.',
     OTP_VERIFICATION_FAILED: 'Canot send Otp currently. Try again later',
+    SENDING_OTP_EMAIL_SUBJECT: 'EB Pearls Meeting Booking Community',
     SENDING_OTP_EMAIL_TEXT: `Dear Pearlians,
 
 We're excited to have you as a part of the EB Pearls Meeting Room Booking community! To ensure the security of your account, we need to verify your identity. Please follow the instructions below to complete your login:

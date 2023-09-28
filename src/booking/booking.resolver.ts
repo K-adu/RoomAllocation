@@ -17,14 +17,12 @@ import { DeleteBookingDto } from './dto/delete.dto';
 export class BookingResolver {
   constructor(private bookingService: BookingService) {}
 
-  // getting all the bookings of all the users
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Query(() => [BookingResponse])
   async allBookings(@Args('filters') filter: BookingFilters) {
     const bookings = await this.bookingService.getAllBookingService(filter);
     return bookings;
   }
-  // getting the bookings that i posted
   @UseGuards(AuthGuard)
   @Query(() => [MyBookingsResponse])
   async myBookings(@Context() context: { req: Request }) {
@@ -33,7 +31,6 @@ export class BookingResolver {
     return bookings;
   }
 
-  //API that return meeting that is ongoing now
   @UseGuards(AuthGuard)
   @Query(() => [OngoingMeetings])
   async onGoingMeetings() {
@@ -41,7 +38,6 @@ export class BookingResolver {
     return bookings;
   }
 
-  //creating new bookings
   @UseGuards(AuthGuard)
   @Mutation(() => Booking)
   async createManualBooking(
@@ -59,7 +55,6 @@ export class BookingResolver {
     }
   }
 
-  //edit event
   @UseGuards(AuthGuard)
   @Mutation(() => EditBookingResponse)
   async editBooking(

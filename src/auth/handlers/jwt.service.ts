@@ -11,6 +11,13 @@ export class GenerateJwtService {
       email: user.email,
     };
 
-    return await this.jwtService.signAsync(payload);
+    const accessToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '1h',
+    });
+
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '7d',
+    });
+    return { accessToken, refreshToken };
   }
 }

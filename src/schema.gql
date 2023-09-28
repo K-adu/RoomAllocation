@@ -15,7 +15,12 @@ type OtpMail {
 }
 
 type Token {
-  token: String!
+  refreshToken: String!
+  accessToken: String!
+}
+
+type NewAccessToken {
+  accessToken: String!
 }
 
 type Booking {
@@ -100,13 +105,14 @@ type Query {
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-28T05:19:35.284Z"
+  date: DateTime = "2023-09-28T09:30:10.257Z"
 }
 
 type Mutation {
   editUser(edit: EditUserDto!): Boolean!
   sendEmail(sendEmail: LoginDto!): OtpMail!
   sendOtp(sendOtp: OtpDto!): Token!
+  refreshToken(refreshToken: String!): NewAccessToken!
   createManualBooking(create: CreateBookingDto!): Booking!
   editBooking(editBooking: EditBookingDto!): EditBookingResponse!
   deleteBooking(deleteBooking: DeleteBookingDto!): Boolean!
