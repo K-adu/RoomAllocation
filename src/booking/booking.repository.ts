@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Booking } from './schema/booking.schema';
 import mongoose from 'mongoose';
@@ -183,5 +183,12 @@ export class BookingRepository {
   async editBookingRepository(bookingId, data) {
     const world = await this.bookingModel.findByIdAndUpdate(bookingId, data);
     return world;
+  }
+  async deleteBookingRepository(id) {
+    try {
+      return await this.bookingModel.findByIdAndDelete(id);
+    } catch (e) {
+      throw new UnauthorizedException('You cannot delete the post');
+    }
   }
 }

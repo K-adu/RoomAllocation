@@ -12,6 +12,14 @@ export class BookingService {
   ) {}
 
   async createBookingService(body, req) {
+    const providedDate = new Date(body.date);
+
+    const currentDate = new Date();
+
+    if (providedDate < currentDate) {
+      throw new NotAcceptableException('The date cannot be in the past.');
+    }
+
     const startTime = moment(body.startTime, 'h:mm A').toISOString();
     const endTime = moment(body.endTime, 'h:mm A').toISOString();
     const hostName = req.user.id;
@@ -74,6 +82,13 @@ export class BookingService {
       );
     } else {
       throw new NotAcceptableException('Cannot Create For the Given Time Slot');
+    }
+  }
+  async deleteBookingService(id) {
+    try {
+      return this.bookingRepository.deleteBookingRepository(id);
+    } catch (e) {
+      throw new NotAcceptableException('the booking cannot be deleted');
     }
   }
 }

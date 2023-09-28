@@ -100,7 +100,7 @@ type Query {
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-28T04:08:36.538Z"
+  date: DateTime = "2023-09-28T05:19:35.284Z"
 }
 
 type Mutation {
@@ -109,6 +109,7 @@ type Mutation {
   sendOtp(sendOtp: OtpDto!): Token!
   createManualBooking(create: CreateBookingDto!): Booking!
   editBooking(editBooking: EditBookingDto!): EditBookingResponse!
+  deleteBooking(deleteBooking: DeleteBookingDto!): Boolean!
 }
 
 input EditUserDto {
@@ -149,4 +150,8 @@ input EditBookingDto {
   startTime: String
   endTime: String
   guests: [String!]
+}
+
+input DeleteBookingDto {
+  _id: String!
 }

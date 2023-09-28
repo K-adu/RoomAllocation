@@ -11,6 +11,7 @@ import { CreateBookingDto } from './dto/createBooking.dto';
 import { NotAcceptableException, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/shared/guard/auth.guard';
 import { EditBookingDto, EditBookingResponse } from './dto/editBooking.dto';
+import { DeleteBookingDto } from './dto/delete.dto';
 
 @Resolver((of) => Booking)
 export class BookingResolver {
@@ -70,5 +71,14 @@ export class BookingResolver {
     return await this.bookingService.editBookingService(req, data, bookingId);
   }
 
-  //delete event
+  @UseGuards(AuthGuard)
+  @Mutation(() => Boolean)
+  async deleteBooking(@Args('deleteBooking') data: DeleteBookingDto) {
+    try {
+      await this.bookingService.deleteBookingService(data._id);
+    } catch (error) {
+      throw new NotAcceptableException('cannot delete the user');
+    }
+    return true;
+  }
 }
