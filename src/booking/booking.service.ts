@@ -51,6 +51,7 @@ export class BookingService {
   }
 
   async editBookingService(req, data, bookingId) {
+    //afno bahek aru ko check hanne ki slot khali cha ki nai bhanerah
     const userId = req.user.id;
     let isPost = await this.bookingRepository.checkLoggedInUserBooking(
       bookingId,
@@ -77,11 +78,16 @@ export class BookingService {
       }
     }
     console.log('this is from the service checking null', update);
-    const editedPost = {
-      ...isPost,
-      ...update,
-    };
-    const isVacantSlot = this.checkVacantRoomService(editedPost);
+    // const editedPost = {
+    //   ...isPost,
+    //   ...update,
+    // };
+    // console.log(isPost)
+    // console.log('this is from he edited post service', editedPost);
+    const isVacantSlot = this.bookingRepository.checkVacantRoomRepository(
+      update,
+      bookingId,
+    );
 
     if (!isVacantSlot) {
       throw new NotAcceptableException(

@@ -100,7 +100,7 @@ type Query {
 
 input BookingFilters {
   floor: String
-  date: DateTime = "2023-09-27T12:20:12.684Z"
+  date: DateTime = "2023-09-28T02:46:05.564Z"
 }
 
 type Mutation {

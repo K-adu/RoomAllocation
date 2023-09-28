@@ -15,7 +15,7 @@ export class BookingRepository {
     return await this.bookingModel.create(data);
   }
 
-  async checkVacantRoomRepository(data) {
+  async checkVacantRoomRepository(data, bookingId = null) {
     const existingBookingAM = await this.bookingModel.findOne({
       floor: data.floor,
       date: data.date,
@@ -33,6 +33,7 @@ export class BookingRepository {
           ],
         },
       ],
+      _id: { $ne: data.bookingId },
     });
     return existingBookingAM;
   }
@@ -123,9 +124,6 @@ export class BookingRepository {
     return data;
   }
 
-  //on going meeting euta ta huncha each floor ma lol birserah
-  // tesko lagi just which one has start time less than current time
-  // and end date greater than current time
   async getAllOngoingMeetingsRepository() {
     try {
       const filterDate = new Date();
